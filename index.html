@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Изумрудик AI</title>
+    
+    <!-- МАГИЯ: Твой Изумруд вместо значка планеты -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%2350c878%22 stroke=%22%23065f46%22 stroke-width=%225%22/></svg>">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ОКНО РЕГИСТРАЦИИ -->
+
+    <!-- ОКНО РЕГИСТРАЦИИ (Всплывет, если ты не вошел) -->
     <div id="auth-screen">
         <h2 style="color:#50c878">Emerald ID: Регистрация</h2>
         <input type="text" id="reg-name" placeholder="Как тебя зовут?" autocomplete="off">
@@ -16,17 +21,23 @@
     </div>
 
     <!-- ТВОЙ ЛИЧНЫЙ ID В УГЛУ -->
-    <div id="id-badge">Emerald ID: <span id="user-id-display">...</span></div>
+    <div id="id-badge">Emerald ID: <span id="user-id-display">Загрузка...</span></div>
 
+    <!-- ГЛАВНЫЙ ИЗУМРУД -->
     <div id="emerald" title="Нажми и говори"></div>
+    
     <h1>Изумрудик</h1>
     <p id="status">Нажми на круг или напиши вопрос</p>
 
+    <!-- ТВОЯ ТЁМНО-ЗЕЛЁНАЯ ТАБЛЕТКА -->
     <div id="input-container">
         <input type="text" id="user-input" placeholder="Спросите о чём угодно..." autocomplete="off">
-        <button id="send-btn"><span class="arrow-up">↑</span></button>
+        <button id="send-btn" title="Отправить">
+            <span class="arrow-up">↑</span>
+        </button>
     </div>
 
+    <!-- ОТВЕТ НЕЙРОСЕТИ -->
     <div id="ai-answer"></div>
 
     <script src="script.js"></script>
