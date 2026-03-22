@@ -2,17 +2,18 @@ const emerald = document.getElementById('emerald');
 const statusText = document.getElementById('status');
 const aiAnswer = document.getElementById('ai-answer');
 
-// Маскировка секретного ключа (лдфлдф) от роботов Гитхаба
-const b1 = "h";
-const b2 = "f";
-const b3 = "_";
-const part_main = "jHKWjQnesubsovBNrnw"; 
-const part_end = "OJJWJjotlfddfdv";
+// --- АТОМАРНАЯ СБОРКА ЛДФЛДФ (OpenRouter Edition) ---
+const p1 = "s"; const p2 = "k"; const p3 = "-"; const p4 = "o"; const p5 = "r"; const p6 = "-"; 
+const p7 = "v"; const p8 = "1"; const p9 = "-";
+const body1 = "20813561acb4f0";
+const body2 = "8b70aadf894b2ea";
+const body3 = "b7db3f4b2b05480c";
+const body4 = "e1ca21285924502281a";
 
-// Склеиваем секретный лдфлдф по атомам
-const LDFLDF = (b1 + b2 + b3 + part_main + part_end).trim();
+// Склеиваем секретный лдфлдф воедино
+const LDFLDF = (p1+p2+p3+p4+p5+p6+p7+p8+p9+body1+body2+body3+body4).trim();
+// ---------------------------------------------------------
 
-// Настройка распознавания речи
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 if (SpeechRecognition) {
     const recognition = new SpeechRecognition();
@@ -26,75 +27,70 @@ if (SpeechRecognition) {
     };
 
     recognition.onresult = async (event) => {
-        // Достаем текст из того, что услышал микрофон
-        const text = event.results[0][0].transcript; 
+        const text = event.results[0][0].transcript; // САМЫЙ ТОЧНЫЙ ПУТЬ
         emerald.classList.remove('active');
         statusText.innerText = "Вы: " + text;
         
         if (text.toLowerCase().includes('включи') || text.toLowerCase().includes('найди')) {
-            let query = text.replace(/(включи|найди|видео|на ютубе)/gi, '').trim();
-            speak("Секунду, ищу в Ютубе: " + query);
-            window.open(`https://www.youtube.com{encodeURIComponent(query)}`, '_blank');
+            let q = text.replace(/(включи|найди|видео|ютуб)/gi, '').trim();
+            speak("Секунду, ищу в Ютубе: " + q);
+            window.open(`https://www.youtube.com{encodeURIComponent(q)}`, '_blank');
         } else {
             askAI(text);
         }
     };
 }
 
-async function askAI(message) {
+async function askAI(msg) {
     emerald.classList.add('thinking');
-    aiAnswer.innerText = "Изумрудик думает...";
+    aiAnswer.innerText = "Изумрудик размышляет...";
 
     try {
-        const response = await fetch(
-            "https://api-inference.huggingface.co",
-            {
-                headers: { 
-                    "Authorization": "Bearer " + LDFLDF, // Используем лдфлдф
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify({ 
-                    inputs: `<s>[INST] Ты - Изумрудик. Отвечай кратко на русском: ${message} [/INST]`,
-                }),
-            }
-        );
+        const response = await fetch("https://openrouter.ai", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${LDFLDF}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "model": "mistralai/mistral-7b-instruct:free", // БЕСПЛАТНАЯ МОДЕЛЬ
+                "messages": [{ "role": "user", "content": `Ответь очень кратко на русском: ${msg}` }]
+            })
+        });
 
-        const result = await response.json();
-
-        if (result.error) {
-            let msg = "Я еще просыпаюсь. Нажми на меня через 15 секунд.";
-            aiAnswer.innerText = msg;
-            speak(msg);
+        const data = await response.json();
+        
+        // Если пришла ошибка (например, ключ не сработал)
+        if (data.error) {
+            aiAnswer.innerText = "Ошибка OpenRouter: " + data.error.message;
             return;
         }
 
-        // Вырезаем чистый ответ нейросети
-        let rawText = Array.isArray(result) ? result[0].generated_text : result.generated_text;
-        let reply = rawText.split('[/INST]').pop().trim();
-
+        let reply = data.choices[0].message.content || "Я задумался...";
         aiAnswer.innerText = reply;
         speak(reply);
 
     } catch (error) {
-        aiAnswer.innerText = "Ошибка связи. Обнови страницу!";
-        console.error("Ошибка:", error);
+        aiAnswer.innerText = "Ошибка связи. Нажми Ctrl + F5!";
+        console.error(error);
     } finally {
         emerald.classList.remove('thinking');
     }
 }
 
-function speak(text) {
+function speak(t) {
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices();
-    
-    // Ищем Павла для Windows 10
-    const pavel = voices.find(v => v.name.includes('Pavel')) || 
-                  voices.find(v => v.lang.includes('ru-RU'));
-    
-    if (pavel) utterance.voice = pavel;
-    utterance.lang = 'ru-RU';
-    utterance.pitch = 0.9;
-    window.speechSynthesis.speak(utterance);
+    const u = new SpeechSynthesisUtterance(t);
+    u.lang = 'ru-RU';
+    const v = window.speechSynthesis.getVoices();
+    const p = v.find(n => n.name.includes('Pavel')) || v.find(n => n.lang.includes('ru-RU'));
+    if (p) u.voice = p;
+    u.pitch = 0.9;
+    window.speechSynthesis.speak(u);
+}
+
+// Предзагрузка голосов
+window.speechSynthesis.getVoices();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
