@@ -1,4 +1,4 @@
-/* 1. Основа и фон (Глаза отдыхают) */
+/* 1. Основа как на твоем фото */
 body {
     display: flex; 
     flex-direction: column; 
@@ -6,35 +6,33 @@ body {
     justify-content: center; 
     height: 100vh; 
     margin: 0;
-    background: #0d1117; 
+    background: #0d1117; /* Тот самый глубокий черный */
     color: #50c878; 
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
 }
 
-/* 2. Наш Изумруд (Тот самый, что ты настроил) */
+/* 2. Изумруд (Свечение как на скрине) */
 #emerald {
     width: 160px; 
     height: 160px;
     background: radial-gradient(circle, #50c878, #065f46);
     border-radius: 50%; 
     cursor: pointer;
-    box-shadow: 0 0 30px rgba(80, 200, 120, 0.2);
+    box-shadow: 0 0 40px rgba(80, 200, 120, 0.4);
     transition: 0.4s ease;
     border: 3px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Пульсация при разговоре */
 #emerald.active {
     animation: pulse 1s infinite alternate;
-    box-shadow: 0 0 60px #50c878;
+    box-shadow: 0 0 70px #50c878;
     border-color: #fff;
 }
 
-/* Вращение при раздумьях (Бирюзово-синий) */
 #emerald.thinking {
     animation: rotate 2s linear infinite;
-    filter: hue-rotate(150deg); 
+    filter: hue-rotate(150deg); /* Тот самый бирюзовый эффект */
 }
 
 @keyframes pulse {
@@ -47,34 +45,35 @@ body {
     to { transform: rotate(360deg); }
 }
 
-/* 3. Заголовки и статус */
+/* 3. Тексты */
 h1 { 
     margin-top: 25px; 
-    letter-spacing: 3px; 
-    text-shadow: 0 0 10px rgba(80, 200, 120, 0.5); 
+    font-size: 2.5em;
+    letter-spacing: 5px; 
+    text-shadow: 0 0 15px rgba(80, 200, 120, 0.6); 
 }
 
 #status { 
     color: #8b949e; 
-    margin-bottom: 15px; 
+    margin-bottom: 10px; 
 }
 
-/* 4. ТВОЯ БОЛЬШАЯ ТЁМНО-ЗЕЛЁНАЯ ТАБЛЕТКА */
+/* 4. ТВОЯ ИДЕАЛЬНАЯ ТЁМНО-ЗЕЛЁНАЯ ТАБЛЕТКА */
 #input-container {
     display: flex; 
     align-items: center; 
     margin-top: 20px;
-    background: #0a2e1f; /* Глубокий тёмно-зелёный */
-    border-radius: 35px;
-    padding: 8px 8px 8px 25px; 
-    border: 2px solid rgba(80, 200, 120, 0.4); 
-    width: 400px; /* Сделал широким и удобным */
+    background: #0a2e1f; /* Глубокий изумрудный цвет внутри */
+    border-radius: 40px;
+    padding: 10px 10px 10px 25px; 
+    border: 2px solid rgba(80, 200, 120, 0.5); 
+    width: 420px; /* Широкая, как ты и просил */
     transition: 0.3s ease;
 }
 
 #input-container:focus-within {
     border-color: #50c878;
-    box-shadow: 0 0 15px rgba(80, 200, 120, 0.3);
+    box-shadow: 0 0 20px rgba(80, 200, 120, 0.4);
 }
 
 #user-input {
@@ -94,39 +93,39 @@ h1 {
 #send-btn {
     background-color: #50c878; 
     border: none; 
-    width: 45px; 
-    height: 45px;
+    width: 48px; 
+    height: 48px;
     border-radius: 50%; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
     cursor: pointer; 
     transition: 0.3s;
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .arrow-up { 
-    color: white; /* Белая стрелочка */
-    font-size: 24px; 
+    color: white; 
+    font-size: 26px; 
     font-weight: bold; 
 }
 
 #send-btn:hover {
-    background-color: #ffffff; /* При наведении таблетка белеет */
+    background-color: #ffffff; /* Белеет при наведении */
     transform: scale(1.1);
 }
 
 #send-btn:hover .arrow-up {
-    color: #065f46; /* А стрелка зеленеет */
+    color: #065f46; /* Стрелка зеленеет */
 }
 
-/* 6. Поле ответа AI */
+/* 6. Поле ответа (Там, где ошибка на скрине) */
 #ai-answer { 
-    margin-top: 25px;
+    margin-top: 30px;
     max-width: 85%; 
     text-align: center; 
     color: #c9d1d9; 
-    line-height: 1.5; 
-    font-size: 1.1em; 
-    min-height: 50px;
+    line-height: 1.6; 
+    font-size: 1.2em; 
+    min-height: 60px;
 }
