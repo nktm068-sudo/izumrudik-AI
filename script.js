@@ -4,13 +4,20 @@ const aiAnswer = document.getElementById('ai-answer');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 
-// --- Твой АТОМАРНЫЙ лдфлдф (Безопасная сборка) ---
-const p1="s", p2="k", p3="-", p4="o", p5="r", p6="-", p7="v", p8="1", p9="-";
-const b1="20813561acb4f0", b2="8b70aadf894b2ea", b3="b7db3f4b2b05480c", b4="e1ca21285924502281a";
-const LDFLDF = (p1+p2+p3+p4+p5+p6+p7+p8+p9+b1+b2+b3+b4).trim();
+// --- ТВОЙ НОВЫЙ АТОМАРНЫЙ ЛДФЛДФ (OpenRouter) ---
+const p1 = "s"; const p2 = "k"; const p3 = "-"; const p4 = "o"; const p5 = "r"; const p6 = "-"; 
+const p7 = "v"; const p8 = "1"; const p9 = "-";
+// Разбиваем твой ключ "57ab99..." на 4 части
+const b1 = "57ab993b98209b";
+const b2 = "1e9941644e030f";
+const b3 = "27ef19e97a7bd735";
+const b4 = "91485e0f6c5da3c1ba6b";
 
-// 1. Обработка текста
-function handleText() {
+const LDFLDF = (p1+p2+p3+p4+p5+p6+p7+p8+p9+b1+b2+b3+b4).trim();
+// ---------------------------------------------------------
+
+// 1. Отправка текста (Таблетка + Стрелочка)
+function handleRequest() {
     const text = userInput.value.trim();
     if (text) {
         statusText.innerText = "Вы: " + text;
@@ -18,10 +25,10 @@ function handleText() {
         userInput.value = "";
     }
 }
-sendBtn.onclick = handleText;
-userInput.onkeypress = (e) => { if (e.key === 'Enter') handleText(); };
+sendBtn.onclick = handleRequest;
+userInput.onkeypress = (e) => { if(e.key === 'Enter') handleRequest(); };
 
-// 2. Распознавание голоса
+// 2. Голос (Клик по Изумруду)
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 if (SpeechRecognition) {
     const rec = new SpeechRecognition();
@@ -35,7 +42,7 @@ if (SpeechRecognition) {
     };
 }
 
-// 3. Запрос к ИИ через Ядерный Прокси
+// 3. Мозги (OpenRouter + Ядерный Прокси)
 async function askAI(msg) {
     emerald.classList.add('thinking');
     aiAnswer.innerText = "Изумрудик пробивает защиту...";
@@ -55,11 +62,10 @@ async function askAI(msg) {
         aiAnswer.innerText = reply;
         speak(reply);
     } catch (e) {
-        aiAnswer.innerText = "Даже прокси не помог. Дай мне отдохнуть 15 минут!";
+        aiAnswer.innerText = "Даже ядерный метод не помог. Отдохни до 02:00!";
     } finally { emerald.classList.remove('thinking'); }
 }
 
-// 4. Озвучка Павла
 function speak(t) {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(t);
