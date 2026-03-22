@@ -2,7 +2,7 @@ const emerald = document.getElementById('emerald');
 const statusText = document.getElementById('status');
 const aiAnswer = document.getElementById('ai-answer');
 
-// Собираем токен из кусочков, чтобы GitHub его не забанил
+// Собираем токен из кусочков, чтобые его не забанили
 const p1 = "hf_";
 const p2 = "jHKWjQnesubsovBNrnw"; 
 const p3 = "OJJWJjotlfddfdv";
