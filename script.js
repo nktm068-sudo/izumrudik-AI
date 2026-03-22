@@ -1,37 +1,48 @@
-const emerald = document.getElementById('emerald');
-const statusText = document.getElementById('status');
-const aiAnswer = document.getElementById('ai-answer');
-const userInput = document.getElementById('user-input');
-const sendBtn = document.getElementById('send-btn');
-const userIdDisplay = document.getElementById('user-id-display');
+// --- МАГИЧЕСКИЕ КУКИ НА 2 ГОДА ---
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        // Рассчитываем время: 730 дней * 24 часа * 60 мин * 60 сек * 1000 мс
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+}
 
-// ЭЛЕМЕНТЫ РЕГИСТРАЦИИ
-const authScreen = document.getElementById('auth-screen');
-const regNameInput = document.getElementById('reg-name');
-const regPassInput = document.getElementById('reg-pass');
-const regBtn = document.getElementById('reg-btn');
+function getCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
 
-// --- 1. СИСТЕМА ПРОФИЛЯ НИКИТЫ ---
-let currentUser = "";
-
+// --- ОБНОВЛЕННАЯ РЕГИСТРАЦИЯ НИКИТЫ ---
 function initAuth() {
-    const savedName = localStorage.getItem('emerald_username');
-    const savedPass = localStorage.getItem('emerald_password');
+    const savedName = getCookie('emerald_username');
+    const savedPass = getCookie('emerald_password');
 
     if (!savedName) {
-        // Если аккаунта нет - показываем окно регистрации
         authScreen.style.display = 'flex';
         regBtn.onclick = () => {
-            if (regNameInput.value && regPassInput.value) {
-                localStorage.setItem('emerald_username', regNameInput.value);
-                localStorage.setItem('emerald_password', regPassInput.value);
-                alert("Аккаунт создан! Перезагрузка...");
+            const name = regNameInput.value.trim();
+            const pass = regPassInput.value.trim();
+            
+            if (name && pass) {
+                // СОХРАНЯЕМ НА 730 ДНЕЙ (2 ГОДА!) 💎
+                setCookie('emerald_username', name, 730);
+                setCookie('emerald_password', pass, 730);
+                
+                alert("Emerald ID создан на 2 года! Привет, " + name);
                 location.reload();
             }
         };
     } else {
-        // Если аккаунт есть - спрашиваем пароль через prompt
-        const passCheck = prompt(`Привет, ${savedName}! Введи пароль Emerald ID:`);
+        const passCheck = prompt(`Привет, ${savedName}! Введи пароль Emerald ID (Срок жизни аккаунта: 2 года):`);
         if (passCheck === savedPass) {
             currentUser = savedName;
             userIdDisplay.innerText = currentUser + " (Online)";
@@ -41,53 +52,4 @@ function initAuth() {
             location.reload();
         }
     }
-}
-
-initAuth(); // Запуск авторизации
-
-// --- 2. ТВОЙ АТОМАРНЫЙ ЛДФЛДФ ---
-const p1="s", p2="k", p3="-", p4="o", p5="r", p6="-", p7="v", p8="1", p9="-";
-const b1="57ab993b98209b", b2="1e9941644e030f", b3="27ef19e97a7bd735", b4="91485e0f6c5da3c1ba6b";
-const LDFLDF = (p1+p2+p3+p4+p5+p6+p7+p8+p9+b1+b2+b3+b4).trim();
-
-// --- 3. ЛОГИКА ЧАТА ---
-function handle() {
-    const t = userInput.value.trim();
-    if (t && currentUser) { 
-        statusText.innerText = currentUser + ": " + t; 
-        askAI(t); 
-        userInput.value = ""; 
-    }
-}
-sendBtn.onclick = handle;
-userInput.onkeypress = (e) => { if(e.key === 'Enter') handle(); };
-
-async function askAI(msg) {
-    emerald.classList.add('thinking');
-    aiAnswer.innerText = "Изумрудик пробивает защиту...";
-    try {
-        const proxy = "https://corsproxy.io?";
-        const url = "https://openrouter.ai";
-        const res = await fetch(proxy + encodeURIComponent(url), {
-            method: "POST",
-            headers: { "Authorization": `Bearer ${LDFLDF}`, "Content-Type": "application/json" },
-            body: JSON.stringify({
-                "model": "mistralai/mistral-7b-instruct:free",
-                "messages": [{ "role": "user", "content": `Ответь кратко на русском: ${msg}` }]
-            })
-        });
-        const data = await res.json();
-        const reply = data.choices[0].message.content;
-        aiAnswer.innerText = reply;
-        speak(reply);
-    } catch (e) {
-        aiAnswer.innerText = "Ошибка сервера. Отдохни 15 минут!";
-    } finally { emerald.classList.remove('thinking'); }
-}
-
-function speak(t) {
-    window.speechSynthesis.cancel();
-    const u = new SynthesisUtterance(t); // Стандартный голос
-    u.lang = 'ru-RU';
-    window.speechSynthesis.speak(u);
 }
